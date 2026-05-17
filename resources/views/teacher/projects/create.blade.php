@@ -329,53 +329,15 @@
 
                     <label style="font-size:1rem;font-weight:700;">
                         📋 Assign Tasks
+                        <span style="color:#9ca3af;font-size:.78rem;font-weight:400;margin-left:.4rem;">(optional)</span>
                     </label>
 
-                    <div id="task-wrapper">
+                    {{-- Task list: starts empty --}}
+                    <div id="task-wrapper"></div>
 
-                        {{-- FIRST TASK --}}
-                        <div class="task-card">
-
-                            <div class="field">
-                                <label>Task Title</label>
-
-                                <input
-                                    type="text"
-                                    name="tasks[0][title]"
-                                    placeholder="Enter task title"
-                                >
-                            </div>
-
-                            <div class="field">
-                                <label>Task Description</label>
-
-                                <textarea
-                                    name="tasks[0][description]"
-                                    rows="3"
-                                    placeholder="Enter task details"
-                                ></textarea>
-                            </div>
-
-                            <div class="field">
-                                <label>Task Due Date</label>
-                                <input type="datetime-local" name="tasks[0][due_date]">
-                            </div>
-
-                            <div class="field">
-                                <label>Max Points
-                                    <span style="color:#9ca3af;font-weight:400;">(default: 100)</span>
-                                </label>
-                                <input type="number"
-                                       name="tasks[0][max_points]"
-                                       min="1"
-                                       max="10000"
-                                       placeholder="100"
-                                       value="{{ old('tasks.0.max_points', 100) }}"
-                                       style="width:100%;">
-                            </div>
-
-                        </div>
-
+                    {{-- Empty state shown when no tasks added --}}
+                    <div id="task-empty-state" style="padding:1.25rem;background:#f9fafb;border:1.5px dashed #e5e7eb;border-radius:10px;text-align:center;color:#9ca3af;font-size:.85rem;margin-bottom:.75rem;">
+                        No tasks added yet. Click <strong>+ Add Task</strong> below to create one.
                     </div>
 
                     {{-- ADD TASK BUTTON --}}
@@ -384,7 +346,7 @@
                         class="btn btn-add"
                         id="add-task-btn"
                     >
-                        ➕ Add Another Task
+                        ➕ Add Task
                     </button>
 
                 </div>

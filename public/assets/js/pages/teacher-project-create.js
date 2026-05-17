@@ -1,25 +1,39 @@
 /* teacher/projects/create.blade.php */
 
-let taskIndex = 1;
+let taskIndex = 0;
+
+function updateEmptyState() {
+    var wrapper   = document.getElementById('task-wrapper');
+    var emptyMsg  = document.getElementById('task-empty-state');
+    var addBtn    = document.getElementById('add-task-btn');
+    if (!wrapper || !emptyMsg) return;
+    var hasTasks = wrapper.querySelectorAll('.task-card').length > 0;
+    emptyMsg.style.display = hasTasks ? 'none' : 'block';
+    if (addBtn) addBtn.textContent = hasTasks ? '➕ Add Another Task' : '➕ Add Task';
+}
+
+function removeTask(btn) {
+    btn.closest('.task-card').remove();
+    updateEmptyState();
+}
 
 document.getElementById('add-task-btn').addEventListener('click', function () {
+    var wrapper = document.getElementById('task-wrapper');
 
-    const wrapper = document.getElementById('task-wrapper');
-
-    const taskHTML = `
-        <div class="task-card">
+    var taskHTML = `
+        <div class="task-card" style="position:relative;">
 
             <button
                 type="button"
                 class="remove-btn"
-                onclick="this.parentElement.remove()"
+                onclick="removeTask(this)"
+                title="Remove task"
             >
                 ✕
             </button>
 
             <div class="field">
                 <label>Task Title</label>
-
                 <input
                     type="text"
                     name="tasks[${taskIndex}][title]"
@@ -29,7 +43,6 @@ document.getElementById('add-task-btn').addEventListener('click', function () {
 
             <div class="field">
                 <label>Task Description</label>
-
                 <textarea
                     name="tasks[${taskIndex}][description]"
                     rows="3"
@@ -39,7 +52,6 @@ document.getElementById('add-task-btn').addEventListener('click', function () {
 
             <div class="field">
                 <label>Task Due Date</label>
-
                 <input
                     type="datetime-local"
                     name="tasks[${taskIndex}][due_date]"
@@ -61,8 +73,8 @@ document.getElementById('add-task-btn').addEventListener('click', function () {
     `;
 
     wrapper.insertAdjacentHTML('beforeend', taskHTML);
-
     taskIndex++;
+    updateEmptyState();
 });
 
 function switchTab(form, tab) {
@@ -87,3 +99,6 @@ function switchTab(form, tab) {
         fileBtn.style.color      = '#6b7280';
     }
 }
+
+// Init: show empty state on page load
+document.addEventListener('DOMContentLoaded', updateEmptyState);
